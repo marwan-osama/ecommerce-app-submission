@@ -1,0 +1,66 @@
+.product-attr {
+	@include flexColumn(8px);
+
+	.attr-title {
+		font-family: "Roboto Condensed", sans-serif;
+		text-transform: uppercase;
+
+		&.small {
+			text-transform: capitalize;
+		}
+	}
+
+	.attr-items {
+		display: flex;
+		gap: 8px;
+
+		&.small {
+			gap: 6px;
+		}
+
+		.attr-text {
+			font-family: "Source Sans Pro", sans-serif;
+			min-width: 60px;
+			height: 40px;
+			background-color: map-get($colors, "neutral-5");
+			border: map-get($colors, "neutral-2") solid 1px;
+			transition: background-color 100ms, color 100ms;
+
+			&.selected {
+				background-color: map-get($colors, "neutral-2");
+				color: map-get($colors, "neutral-5");
+			}
+
+			&.small {
+				min-width: 24px;
+				height: 24px;
+			}
+		}
+		.attr-swatch {
+			width: 32px;
+			height: 32px;
+			border: none;
+
+			&.selected {
+				position: relative;
+
+				&::before {
+					content: "";
+					position: absolute;
+					z-index: -1;
+					top: -2px;
+					left: -2px;
+					right: -2px;
+					bottom: -2px;
+					background-color: map-get($colors, "neutral-5");
+					border: 1px solid map-get($colors, "primary");
+				}
+			}
+
+			&.small {
+				width: 16px;
+				height: 16px;
+			}
+		}
+	}
+}

@@ -1,0 +1,29 @@
+$colors: (
+	"primary": #5ece7b,
+	"neutral-1": #000000,
+	"neutral-2": #1d1f22,
+	"neutral-3": #e5e5e5,
+	"neutral-4": #eeeeee,
+	"neutral-5": #ffffff,
+);
+
+@each $clr, $val in $colors {
+	.clr-#{$clr} {
+		color: $val !important;
+	}
+	.bg-#{$clr} {
+		background-color: $val !important;
+	}
+	.clr-#{$clr}-hvr {
+		transition: color 250ms;
+		&:hover {
+			color: $val !important;
+		}
+	}
+	.bg-#{$clr}-hvr {
+		transition: color 250ms;
+		&:hover {
+			background-color: $val !important;
+		}
+	}
+}

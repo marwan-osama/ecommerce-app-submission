@@ -1,0 +1,37 @@
+.showmore-wrapper {
+	position: relative;
+
+	.showmore-content-wrapper {
+		overflow: hidden;
+		position: relative;
+	}
+	.hide-content {
+		position: absolute;
+		width: 100%;
+		height: 32px;
+		bottom: 0;
+		left: 0;
+		background: linear-gradient(
+				to bottom,
+				transparent,
+				map-get($colors, "neutral-5")
+			),
+			linear-gradient(to bottom, transparent, map-get($colors, "neutral-5"));
+		opacity: 0.9;
+	}
+
+	.btn {
+		position: absolute;
+		bottom: -32px;
+		right: 0;
+		left: 0;
+		margin: auto;
+		background-color: transparent;
+		border: none;
+		color: map-get($colors, "primary");
+
+		img {
+			width: 12px;
+		}
+	}
+}

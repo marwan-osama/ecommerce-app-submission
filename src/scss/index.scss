@@ -1,0 +1,36 @@
+@import "breakpoints";
+@import "utils";
+@import "colors";
+@import "fonts";
+@import "animations";
+@import "common";
+
+$nav-height: 80px;
+
+// components
+@import "components/navbar";
+@import "components/dropdown";
+@import "components/cartoverlay";
+@import "components/products";
+@import "components/productcard";
+@import "components/productdetails";
+@import "components/attribute";
+@import "components/showmore";
+@import "components/cartitem";
+@import "components/quantitycontroll";
+@import "components/cart";
+@import "components/cartgallery";
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: "Raleway", sans-serif;
+	margin: 0;
+	color: map-get($colors, "neutral-2");
+}
+
+main {
+	padding-top: $nav-height;
+}

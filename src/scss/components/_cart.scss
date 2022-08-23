@@ -1,0 +1,27 @@
+.cart {
+	padding-top: 25px;
+
+	.cart-title {
+		margin: 55px 0;
+	}
+
+	.cart-items {
+		border-top: solid 1px map-get($colors, "neutral-3");
+	}
+
+	.cart-summary {
+		margin: 32px 0;
+		@include flexColumn(12px);
+		align-items: flex-start;
+
+		.text {
+			td {
+				padding: 4px 0;
+			}
+		}
+
+		.btn {
+			width: 260px;
+		}
+	}
+}

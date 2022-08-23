@@ -1,0 +1,37 @@
+.container {
+	width: min(90%, 1200px);
+	margin: auto;
+}
+
+.btn {
+	font-family: inherit;
+	cursor: pointer;
+}
+
+.primary-btn {
+	background-color: map-get($colors, "primary");
+	color: map-get($colors, "neutral-5");
+	border: none;
+}
+.neutral-btn {
+	background-color: map-get($colors, "neutral-5");
+	color: map-get($colors, "neutral-2");
+	border: solid 1px map-get($colors, "neutral-2");
+}
+.big-btn {
+	padding: 16px;
+	border-radius: 0;
+	border: none;
+
+	&:active {
+		opacity: 0.8;
+		outline: solid 1px map-get($colors, "primary");
+	}
+
+	&:disabled {
+		background-color: map-get($colors, "neutral-3");
+		outline: none;
+		color: map-get($colors, "neutral-5");
+		cursor: default;
+	}
+}

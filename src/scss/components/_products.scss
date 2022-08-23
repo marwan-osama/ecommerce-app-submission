@@ -1,0 +1,20 @@
+.products {
+	.category-title {
+		text-transform: capitalize;
+		margin: 80px 0;
+	}
+
+	.products-wrapper {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		width: 100%;
+		gap: 48px;
+
+		@include min-max-breakpoint(480px, 1024px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		@include max-breakpoint(480px) {
+			grid-template-columns: 1fr;
+		}
+	}
+}

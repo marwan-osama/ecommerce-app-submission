@@ -1,0 +1,21 @@
+.quantity-control {
+	@include flexColumn(0px);
+
+	.btn {
+		border: map-get($colors, "neutral-2") solid 1px;
+		background-color: map-get($colors, "neutral-5");
+		@include flexCenter;
+		width: 42px;
+		height: 42px;
+
+		&.small {
+			width: 24px;
+			height: 24px;
+		}
+	}
+
+	.quantity {
+		@include flexCenter;
+		flex-grow: 1;
+	}
+}

@@ -1,0 +1,28 @@
+@mixin flexCenter {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+@mixin flexColumn($gap) {
+	display: flex;
+	flex-direction: column;
+	gap: $gap;
+}
+
+.reset {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	list-style-type: none;
+	color: inherit;
+	font-family: inherit;
+}
+
+.hidden {
+	display: none !important;
+}
+
+.rotate-180 {
+	transform: rotate(180deg);
+}

@@ -1,0 +1,76 @@
+.cart-overlay {
+	.cart-btn {
+		background-color: map-get($colors, "neutral-5");
+		border: none;
+		position: relative;
+
+		.cart-count {
+			font-family: "Roboto Condensed", sans-serif;
+			@include flexCenter;
+			position: absolute;
+			top: -6px;
+			right: -6px;
+			width: 16px;
+			height: 16px;
+			background-color: #393748;
+			color: white;
+			border-radius: 50%;
+		}
+	}
+	.overlay {
+		@include flexColumn(32px);
+		z-index: 100;
+		position: absolute;
+		top: $nav-height;
+		right: -32px;
+		width: 300px;
+		max-height: 80vh;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		background-color: map-get($colors, "neutral-5");
+		padding: 32px 16px;
+
+		&::-webkit-scrollbar {
+			width: 8px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: inherit;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background: #888;
+			border-radius: 8px;
+		}
+
+		&::-webkit-scrollbar-thumb:hover {
+			background: #555;
+		}
+
+		.cart-total {
+			@include flexCenter;
+			justify-content: space-between;
+		}
+
+		.cart-overlay-buttons {
+			@include flexCenter;
+			gap: 12px;
+
+			& > * {
+				@include flexCenter;
+				height: 42px;
+				flex: 1;
+			}
+		}
+	}
+}
+.gray-cover {
+	z-index: 50;
+	position: fixed;
+	top: $nav-height;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: #393748;
+	opacity: 0.22;
+}

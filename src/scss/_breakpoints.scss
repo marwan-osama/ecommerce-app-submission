@@ -1,0 +1,38 @@
+@mixin s-screen {
+	@media (max-width: 480px) {
+		@content;
+	}
+}
+@mixin m-screen {
+	@media (max-width: 768px) {
+		@content;
+	}
+}
+@mixin l-screen {
+	@media (max-width: 1024px) {
+		@content;
+	}
+}
+@mixin xl-screen {
+	@media (max-width: 1200px) {
+		@content;
+	}
+}
+
+@mixin min-max-breakpoint($minbp, $maxbp) {
+	@media (max-width: $maxbp) {
+		@media (min-width: $minbp) {
+			@content;
+		}
+	}
+}
+@mixin min-breakpoint($minbp) {
+	@media (min-width: $minbp) {
+		@content;
+	}
+}
+@mixin max-breakpoint($maxbp) {
+	@media (max-width: $maxbp) {
+		@content;
+	}
+}

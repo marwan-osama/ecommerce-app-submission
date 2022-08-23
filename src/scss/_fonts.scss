@@ -1,0 +1,26 @@
+@for $num from 1 to 21 {
+	.fs-#{$num} {
+		font-size: 0.5rem + ($num * 0.125);
+	}
+}
+@for $num from 1 to 21 {
+	.lh-#{$num} {
+		line-height: 0.5rem + ($num * 0.125);
+	}
+}
+
+.fw-thin {
+	font-weight: 300;
+}
+.fw-regular {
+	font-weight: 400;
+}
+.fw-medium {
+	font-weight: 500;
+}
+.fw-sbold {
+	font-weight: 600;
+}
+.fw-bold {
+	font-weight: 700;
+}

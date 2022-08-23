@@ -1,0 +1,28 @@
+.cart-gallery {
+	@extend .cart-item-img-wrapper;
+	position: relative;
+
+	.cart-gallery-btns {
+		position: absolute;
+		display: flex;
+		gap: 8px;
+		bottom: 16px;
+		right: 16px;
+
+		.btn {
+			@include flexCenter;
+			background-color: map-get($colors, "neutral-1");
+			color: map-get($colors, "neutral-5");
+			opacity: 0.73;
+			width: 24px;
+			height: 24px;
+
+			&.right {
+				transform: rotate(90deg);
+			}
+			&.left {
+				transform: rotate(-90deg);
+			}
+		}
+	}
+}
