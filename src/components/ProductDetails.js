@@ -82,19 +82,21 @@ class ProductDetails extends Component {
 				<div className="container product-details">
 					<div className="gallery">
 						<div className="small-images">
-							{product?.gallery.map((imgSrc) => {
-								return (
-									<div
-										className={`small-image-wrapper btn ${
-											imgSrc === selectedPhoto && "selected"
-										}`}
-										onClick={() => this.changeSelectedPhoto(imgSrc)}
-										key={imgSrc.split("/")[imgSrc.split("/").length - 1]}
-									>
-										<img src={imgSrc} alt={product?.name} />
-									</div>
-								);
-							})}
+							<div className="small-images-inner-wrapper">
+								{product?.gallery.map((imgSrc) => {
+									return (
+										<div
+											className={`small-image-wrapper btn ${
+												imgSrc === selectedPhoto && "selected"
+											}`}
+											onClick={() => this.changeSelectedPhoto(imgSrc)}
+											key={imgSrc.split("/")[imgSrc.split("/").length - 1]}
+										>
+											<img src={imgSrc} alt={product?.name} />
+										</div>
+									);
+								})}
+							</div>
 						</div>
 						<div className="main-image-wrapper">
 							<img src={selectedPhoto} alt={product?.name} />

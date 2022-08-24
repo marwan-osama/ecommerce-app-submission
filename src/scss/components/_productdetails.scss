@@ -40,44 +40,53 @@
 
 		.small-images {
 			height: var(--main-img-height);
-			display: flex;
-			flex-direction: column;
-			gap: 8px;
 			width: 80px;
 			overflow-y: scroll;
 			border: map-get($colors, "neutral-3") solid 2px;
 
 			@include l-screen {
-				flex-direction: row;
 				overflow-x: scroll;
+				overflow-y: hidden;
 				width: var(--main-img-width);
 				height: auto;
 			}
 
-			.small-image-wrapper {
-				position: relative;
-				width: 100%;
-				padding-top: 100%;
-				overflow: hidden;
-				border: transparent solid 2px;
-				flex-shrink: 0;
+			.small-images-inner-wrapper {
+				margin: auto;
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
 
 				@include l-screen {
-					width: 60px;
-					height: 60px;
-					padding: 0;
+					flex-direction: row;
+					width: min-content;
 				}
 
-				img {
-					position: absolute;
-					top: 50%;
-					left: 50%;
-					transform: translate(-50%, -50%);
+				.small-image-wrapper {
+					position: relative;
 					width: 100%;
+					padding-top: 100%;
+					overflow: hidden;
+					border: transparent solid 2px;
+					flex-shrink: 0;
+
+					@include l-screen {
+						width: 60px;
+						height: 60px;
+						padding: 0;
+					}
+
+					img {
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						transform: translate(-50%, -50%);
+						width: 100%;
+					}
 				}
-			}
-			.selected {
-				border: map-get($colors, "neutral-2") solid 2px;
+				.selected {
+					border: map-get($colors, "neutral-2") solid 2px;
+				}
 			}
 
 			&::-webkit-scrollbar {
