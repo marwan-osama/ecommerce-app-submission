@@ -1,23 +1,72 @@
+:root {
+	--main-img-width: min(50vw, 600px);
+	--main-img-height: min(43.333vw, 500px);
+}
+
+@include m-screen {
+	:root {
+		--main-img-width: 100%;
+		--main-img-height: 300px;
+	}
+}
+
+@include m-screen {
+	$main-img-width: 100%;
+}
+
 .product-details {
 	display: flex;
-	gap: min(5vw, 60px);
+	justify-content: center;
+	align-items: flex-start;
+	gap: min(2.5vw, 60px);
 	margin-top: 80px;
+
+	@include m-screen {
+		flex-direction: column;
+		gap: 32px;
+	}
 
 	.gallery {
 		display: flex;
-		gap: 40px;
+		gap: 20px;
+
+		@include l-screen {
+			flex-direction: column-reverse;
+		}
+
+		@include m-screen {
+			width: 100%;
+		}
 
 		.small-images {
+			height: var(--main-img-height);
 			display: flex;
 			flex-direction: column;
 			gap: 8px;
 			width: 80px;
+			overflow-y: scroll;
+			border: map-get($colors, "neutral-3") solid 2px;
+
+			@include l-screen {
+				flex-direction: row;
+				overflow-x: scroll;
+				width: var(--main-img-width);
+				height: auto;
+			}
 
 			.small-image-wrapper {
 				position: relative;
 				width: 100%;
 				padding-top: 100%;
 				overflow: hidden;
+				border: transparent solid 2px;
+				flex-shrink: 0;
+
+				@include l-screen {
+					width: 60px;
+					height: 60px;
+					padding: 0;
+				}
 
 				img {
 					position: absolute;
@@ -28,13 +77,22 @@
 				}
 			}
 			.selected {
-				outline: map-get($colors, "neutral-2") solid 2px;
+				border: map-get($colors, "neutral-2") solid 2px;
+			}
+
+			&::-webkit-scrollbar {
+				width: 6px;
+				height: 6px;
+			}
+			&::-webkit-scrollbar-thumb {
+				background-color: #535353;
+				border-radius: 3px;
 			}
 		}
 		.main-image-wrapper {
 			position: relative;
-			width: 600px;
-			height: 500px;
+			width: var(--main-img-width);
+			height: var(--main-img-height);
 			border: map-get($colors, "neutral-3") solid 1px;
 
 			img {
@@ -53,6 +111,10 @@
 		flex-direction: column;
 		gap: 28px;
 		width: 290px;
+
+		@include m-screen {
+			width: 100%;
+		}
 
 		.product-title {
 			@include flexColumn(16px);
