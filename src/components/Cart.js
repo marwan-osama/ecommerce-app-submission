@@ -4,14 +4,43 @@ import FilterContext from "../context/FilterContext";
 import CartItem from "./CartItem";
 
 class Cart extends Component {
+	constructor() {
+		super();
+		this.state = {
+			small: document.documentElement.clientWidth < 660,
+		};
+	}
 	static contextType = CartContext;
+
+	handleResize() {
+		const vw = document.documentElement.clientWidth;
+		if (vw < 660) {
+			this.setState({ small: true });
+			return;
+		}
+		this.setState({ small: false });
+	}
+
+	componentDidMount() {
+		window.addEventListener("resize", this.handleResize.bind(this));
+	}
+	componentWillUnmount() {
+		window.removeEventListener("resize", this.handleResize.bind(this));
+	}
+
 	render() {
 		return (
 			<div className="cart container">
 				<h2 className="cart-title fs-12">CART</h2>
 				<div className="cart-items">
 					{this.context.cart.map((product) => {
-						return <CartItem cartProduct={product} key={product.cartId} />;
+						return (
+							<CartItem
+								cartProduct={product}
+								key={product.cartId}
+								small={this.state.small}
+							/>
+						);
 					})}
 				</div>
 				<FilterContext.Consumer>

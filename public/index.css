@@ -861,12 +861,6 @@ nav .container .actions {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 24px 0;
-  border-bottom: solid 1px #e5e5e5;
-}
-.cart-item.small {
-  padding: 0;
-  border: none;
 }
 .cart-item .cart-item-left {
   display: flex;
@@ -945,6 +939,10 @@ nav .container .actions {
 }
 .cart .cart-items {
   border-top: solid 1px #e5e5e5;
+}
+.cart .cart-items > * {
+  border-bottom: solid 1px #e5e5e5;
+  padding: 24px 0;
 }
 .cart .cart-summary {
   margin: 32px 0;
