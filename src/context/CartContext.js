@@ -125,8 +125,10 @@ class CartProvider extends Component {
 					(p) => p.cartId === cartId
 				);
 				if (indexInCart !== -1) {
-					const cartCopy = structuredClone(this.state.cart);
-					cartCopy[indexInCart].quantity += 1;
+					const cartCopy = [...this.state.cart];
+					const product = { ...this.state.cart[indexInCart] };
+					product.quantity += 1;
+					cartCopy[indexInCart] = product;
 					this.setState({ cart: cartCopy });
 					return;
 				} else {
@@ -145,8 +147,10 @@ class CartProvider extends Component {
 					(p) => p.cartId === productCopy.cartId
 				);
 				if (indexInCart !== -1) {
-					const cartCopy = structuredClone(this.state.cart);
-					cartCopy[indexInCart].quantity += 1;
+					const cartCopy = [...this.state.cart];
+					const product = { ...this.state.cart[indexInCart] };
+					product.quantity += 1;
+					cartCopy[indexInCart] = product;
 					this.setState({ cart: cartCopy });
 					return;
 				}
