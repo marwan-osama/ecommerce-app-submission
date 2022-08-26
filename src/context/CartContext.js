@@ -2,6 +2,7 @@ import { createContext } from "react";
 import React, { Component } from "react";
 import { GET_CART_PRODUCT } from "../graphql/Queries";
 import Client from "../graphql/Client";
+import generateUUID from "../utils";
 
 const CartContext = createContext();
 
@@ -65,32 +66,37 @@ class CartProvider extends Component {
 		return Math.round(total * 100) / 100;
 	}
 
-	removeFromCart(cartId, cb) {
-		const cartCopy = structuredClone(this.state.cart);
-		const indexInCart = cartCopy.findIndex(
-			(product) => product.cartId === cartId
-		);
-		cartCopy.splice(indexInCart, 1);
-		this.setState({ cart: cartCopy }, () => cb(indexInCart));
+	removeFromCart(cartId) {
+		const newCart = this.state.cart.filter((p) => p.cartId !== cartId);
+		this.setState({ cart: newCart });
 	}
 
 	editCart(newCartProduct) {
-		const { cartId, id, selectedAttributes } = newCartProduct;
+		const cartCopy = [...this.state.cart];
+		const { cartId, id, selectedAttributes, quantity } = newCartProduct;
 		const newCartId = this.generateCartId(id, selectedAttributes);
-		newCartProduct.cartId = newCartId;
-
-		this.removeFromCart(cartId, (oldIndexInCart) => {
-			const cartCopy = structuredClone(this.state.cart);
-			const indexInCart = cartCopy.findIndex((p) => p.cartId === newCartId);
-			if (!newCartProduct.quantity) {
-				return;
-			} else if (indexInCart !== -1) {
-				cartCopy[indexInCart].quantity += newCartProduct.quantity;
-			} else {
-				cartCopy.splice(oldIndexInCart, 0, newCartProduct);
-			}
-			this.setState({ cart: cartCopy });
-		});
+		const indexInCart = cartCopy.findIndex((p) => p.cartId === newCartId);
+		const oldIndexInCart = cartCopy.findIndex((p) => p.cartId === cartId);
+		if (!quantity) {
+			this.removeFromCart(cartId);
+			return;
+		} else if (indexInCart !== -1 && cartId !== newCartId) {
+			const product = {
+				...cartCopy[indexInCart],
+			};
+			product.quantity += quantity;
+			cartCopy[indexInCart] = product;
+			this.setState({ cart: cartCopy }, () => this.removeFromCart(cartId));
+			return;
+		}
+		const product = {
+			...cartCopy[oldIndexInCart],
+			quantity,
+			selectedAttributes,
+			cartId: newCartId,
+		};
+		cartCopy[oldIndexInCart] = product;
+		this.setState({ cart: cartCopy });
 	}
 
 	async addToCart(id, selectedAttributes) {
@@ -104,6 +110,7 @@ class CartProvider extends Component {
 						product.attributes
 					);
 				}
+				product.uuid = generateUUID();
 				product.quantity = 1;
 				product.cartId = this.generateCartId(id, product.selectedAttributes);
 				this.setState((state) => ({ cart: [...state.cart, product] }));
@@ -111,6 +118,7 @@ class CartProvider extends Component {
 		} else {
 			const productCopy = { ...this.state.cart[productIndex] };
 			productCopy.quantity = 1;
+			productCopy.uuid = generateUUID();
 			if (selectedAttributes) {
 				const cartId = this.generateCartId(productCopy.id, selectedAttributes);
 				const indexInCart = this.state.cart.findIndex(

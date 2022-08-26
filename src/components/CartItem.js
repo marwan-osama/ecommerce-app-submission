@@ -17,7 +17,9 @@ class CartItem extends Component {
 
 	changeSelectedAttr(attributeId, itemId) {
 		const cartProductCopy = { ...this.props.cartProduct };
-		cartProductCopy.selectedAttributes[attributeId] = itemId;
+		const newSelectedAttrs = { ...cartProductCopy.selectedAttributes };
+		newSelectedAttrs[attributeId] = itemId;
+		cartProductCopy.selectedAttributes = newSelectedAttrs;
 		this.context.editCart(cartProductCopy);
 	}
 
@@ -35,7 +37,8 @@ class CartItem extends Component {
 	}
 
 	render() {
-		const { cartProduct, small } = this.props;
+		const { selectedPhoto, changeSelectedPhoto, cartProduct, small } =
+			this.props;
 
 		const classNames = {
 			cartItem: `cart-item ${small ? "small" : ""}`,
@@ -99,6 +102,9 @@ class CartItem extends Component {
 						<CartGallery
 							images={cartProduct.gallery}
 							productName={cartProduct.name}
+							uuid={cartProduct.uuid}
+							selectedPhoto={selectedPhoto}
+							changeSelectedPhoto={changeSelectedPhoto}
 						/>
 					)}
 				</div>
@@ -109,6 +115,8 @@ class CartItem extends Component {
 
 CartItem.propTypes = {
 	cartProduct: PropTypes.object,
+	changeSelectedPhoto: PropTypes.func,
+	selectedPhoto: PropTypes.number,
 	small: PropTypes.bool,
 };
 

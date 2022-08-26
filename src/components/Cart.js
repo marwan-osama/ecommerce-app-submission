@@ -4,14 +4,42 @@ import FilterContext from "../context/FilterContext";
 import CartItem from "./CartItem";
 
 class Cart extends Component {
+	constructor() {
+		super();
+		this.state = {
+			selectedPhotos: {},
+		};
+	}
 	static contextType = CartContext;
+
+	changeSelectedPhoto(uuid, index) {
+		const selectedPhotos = { ...this.state.selectedPhotos };
+		selectedPhotos[uuid] = index;
+		this.setState({ selectedPhotos });
+	}
+
+	componentDidMount() {
+		const selectedPhotos = {};
+		this.context.cart.forEach((cartProduct) => {
+			selectedPhotos[cartProduct.uuid] = 0;
+		});
+		this.setState({ selectedPhotos });
+	}
+
 	render() {
 		return (
 			<div className="cart container">
 				<h2 className="cart-title fs-12">CART</h2>
 				<div className="cart-items">
 					{this.context.cart.map((product) => {
-						return <CartItem cartProduct={product} key={product.cartId} />;
+						return (
+							<CartItem
+								cartProduct={product}
+								key={product.cartId}
+								selectedPhoto={this.state.selectedPhotos[product.uuid]}
+								changeSelectedPhoto={this.changeSelectedPhoto.bind(this)}
+							/>
+						);
 					})}
 				</div>
 				<FilterContext.Consumer>
@@ -23,7 +51,7 @@ class Cart extends Component {
 										<td>Tax 21%:</td>
 										<td>
 											<strong>
-												{context.currency.symbol}
+												{context.currency?.symbol}
 												{Math.round(
 													this.context.cartPriceSum(context.currency) *
 														0.21 *
@@ -42,7 +70,7 @@ class Cart extends Component {
 										<td>Total:</td>
 										<td>
 											<strong>
-												{context.currency.symbol}
+												{context.currency?.symbol}
 												{this.context.cartPriceSum(context.currency)}
 											</strong>
 										</td>
