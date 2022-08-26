@@ -2,13 +2,6 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-start;
-	padding: 24px 0;
-	border-bottom: solid 1px map-get($colors, "neutral-3");
-
-	&.small {
-		padding: 0;
-		border: none;
-	}
 
 	.cart-item-left {
 		@include flexColumn(20px);

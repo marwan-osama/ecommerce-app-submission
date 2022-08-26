@@ -8,6 +8,7 @@ class Cart extends Component {
 		super();
 		this.state = {
 			selectedPhotos: {},
+			small: document.documentElement.clientWidth < 660,
 		};
 	}
 	static contextType = CartContext;
@@ -19,11 +20,24 @@ class Cart extends Component {
 	}
 
 	componentDidMount() {
+		window.addEventListener("resize", this.handleResize.bind(this));
 		const selectedPhotos = {};
 		this.context.cart.forEach((cartProduct) => {
 			selectedPhotos[cartProduct.uuid] = 0;
 		});
 		this.setState({ selectedPhotos });
+	}
+	handleResize() {
+		const vw = document.documentElement.clientWidth;
+		if (vw < 660) {
+			this.setState({ small: true });
+			return;
+		}
+		this.setState({ small: false });
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener("resize", this.handleResize.bind(this));
 	}
 
 	render() {
@@ -38,6 +52,7 @@ class Cart extends Component {
 								key={product.cartId}
 								selectedPhoto={this.state.selectedPhotos[product.uuid]}
 								changeSelectedPhoto={this.changeSelectedPhoto.bind(this)}
+								small={this.state.small}
 							/>
 						);
 					})}

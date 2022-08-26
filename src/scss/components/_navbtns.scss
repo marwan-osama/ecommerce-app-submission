@@ -1,0 +1,96 @@
+.nav-btns {
+	height: 100%;
+	@include flexCenter;
+
+	.overlay {
+		height: 100%;
+	}
+	.overlay.show {
+		@include m-screen {
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background-color: rgba(57, 55, 72, 0.22);
+			z-index: 1;
+		}
+	}
+
+	.navigation {
+		@include flexCenter;
+		height: 100%;
+
+		@include m-screen {
+			position: fixed;
+			flex-direction: column;
+			justify-content: flex-start;
+			top: 0;
+			left: 0;
+			background-color: map-get($colors, "neutral-5");
+			height: 100vh;
+			z-index: 1000;
+			width: 60vw;
+		}
+
+		.close-nav {
+			width: 100%;
+			padding: 24px;
+
+			.btn {
+				display: block;
+				margin-left: auto;
+				background-color: inherit;
+				border: none;
+			}
+
+			@include min-breakpoint(768px) {
+				display: none;
+			}
+		}
+
+		.list-item {
+			height: 100%;
+
+			@include m-screen {
+				height: auto;
+				width: 100%;
+			}
+
+			.btn {
+				height: 100%;
+				padding: 0 12px;
+				border: none;
+				background-color: inherit;
+
+				@include m-screen {
+					width: 100%;
+					padding: 24px;
+				}
+			}
+		}
+
+		.selected {
+			color: map-get($colors, "primary");
+			font-weight: 700;
+			box-shadow: 0 -2px 0 map-get($colors, "primary") inset;
+
+			@include m-screen {
+				box-shadow: 8px 0 0 map-get($colors, "primary") inset;
+			}
+		}
+	}
+
+	.nav-hidden {
+		@include m-screen {
+			display: none;
+		}
+	}
+
+	.nav-gray-cover {
+		@extend .gray-cover;
+		@include min-breakpoint(768px) {
+			display: none;
+		}
+	}
+}

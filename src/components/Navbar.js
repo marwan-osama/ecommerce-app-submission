@@ -4,6 +4,7 @@ import DropDown from "./DropDown";
 import CartOverlay from "./CartOverlay";
 import { PropTypes } from "prop-types";
 import WithRouter from "./HOCs/WithRouter";
+import NavBtns from "./NavBtns";
 
 class Navbar extends Component {
 	static contextType = FilterContext;
@@ -27,20 +28,11 @@ class Navbar extends Component {
 		return (
 			<nav>
 				<div className="container">
-					<ul className="navigation reset">
-						{this.context.categories?.map((category) => {
-							return (
-								<li className="list-item" key={category}>
-									<button
-										className={`btn fs-3 ${this.checkSelected(category)}`}
-										onClick={() => this.switchSelected(category)}
-									>
-										{category.toUpperCase()}
-									</button>
-								</li>
-							);
-						})}
-					</ul>
+					<NavBtns
+						categories={this.context.categories}
+						checkSelected={this.checkSelected.bind(this)}
+						switchSelected={this.switchSelected.bind(this)}
+					/>
 					<img
 						src={process.env.PUBLIC_URL + "/images/svg-logo.svg"}
 						alt="logo"
