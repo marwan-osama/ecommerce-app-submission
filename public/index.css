@@ -588,8 +588,11 @@ nav .container .actions {
   position: absolute;
   top: 0;
   bottom: 0;
+  left: 0;
+  right: 0;
   margin: auto;
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 .product-card .top-section .img-wrapper .no-stock-text {
   width: 100%;
