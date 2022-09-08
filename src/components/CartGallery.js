@@ -7,8 +7,10 @@ class CartGallery extends Component {
 	}
 
 	changeSelected(diff) {
-		let newSelected = this.props.selectedPhoto + diff;
-		const maxSelected = this.props.images.length - 1;
+		const { selectedPhoto, images, uuid, changeSelectedPhoto } = this.props;
+
+		let newSelected = selectedPhoto + diff;
+		const maxSelected = images.length - 1;
 
 		if (newSelected < 0) {
 			newSelected = maxSelected;
@@ -16,11 +18,12 @@ class CartGallery extends Component {
 			newSelected = 0;
 		}
 
-		this.props.changeSelectedPhoto(this.props.uuid, newSelected);
+		changeSelectedPhoto(uuid, newSelected);
 	}
 
 	render() {
 		const { selectedPhoto, images, uuid } = this.props;
+
 		return (
 			<div className="cart-gallery">
 				<img className="product-img" src={images[selectedPhoto]} alt={uuid} />

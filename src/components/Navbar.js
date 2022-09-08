@@ -25,11 +25,12 @@ class Navbar extends Component {
 
 	render() {
 		const { navigate } = this.props;
+		const { currencies, switchCurrency, currency, categories } = this.context;
 		return (
 			<nav>
 				<div className="container">
 					<ul className="navigation reset">
-						{this.context.categories?.map((category) => {
+						{categories?.map((category) => {
 							return (
 								<li className="list-item" key={category}>
 									<button
@@ -50,9 +51,9 @@ class Navbar extends Component {
 					</button>
 					<div className="actions">
 						<DropDown
-							list={this.context.currencies}
-							onSelect={this.context.switchCurrency}
-							selected={this.context.currency}
+							list={currencies}
+							onSelect={switchCurrency}
+							selected={currency}
 						/>
 						<WithRouter WrappedComponent={CartOverlay} />
 					</div>

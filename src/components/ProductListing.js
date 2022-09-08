@@ -25,24 +25,20 @@ class ProductListing extends Component {
 	}
 
 	componentDidMount() {
-		if (this.props.filterContext.category) {
-			getCategoryProducts(this.props.filterContext.category).then(
-				(response) => {
-					this.setState({ products: response.data.category.products });
-				}
-			);
+		const { category } = this.props.filterContext;
+		if (category) {
+			getCategoryProducts(category).then((response) => {
+				this.setState({ products: response.data.category.products });
+			});
 		}
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if (
-			prevProps.filterContext.category !== this.props.filterContext.category
-		) {
-			getCategoryProducts(this.props.filterContext.category).then(
-				(response) => {
-					this.setState({ products: response.data.category.products });
-				}
-			);
+		const { category } = this.props.filterContext;
+		if (prevProps.filterContext.category !== category) {
+			getCategoryProducts(category).then((response) => {
+				this.setState({ products: response.data.category.products });
+			});
 		}
 	}
 

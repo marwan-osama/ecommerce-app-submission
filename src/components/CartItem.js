@@ -24,7 +24,8 @@ class CartItem extends Component {
 	}
 
 	checkSelectedAttr(attributeId, itemId) {
-		if (this.props.cartProduct.selectedAttributes[attributeId] === itemId) {
+		const { selectedAttributes } = this.props.cartProduct;
+		if (selectedAttributes[attributeId] === itemId) {
 			return "selected";
 		}
 		return "";

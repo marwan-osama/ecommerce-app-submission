@@ -23,7 +23,8 @@ class DropDown extends Component {
 	}
 
 	handleClickOutside(e) {
-		if (!this.dropDownRef.current.contains(e.target)) {
+		const { current } = this.dropDownRef;
+		if (!current.contains(e.target)) {
 			this.setState({ showList: false });
 		}
 	}
@@ -38,7 +39,7 @@ class DropDown extends Component {
 
 	render() {
 		const { showList } = this.state;
-		const { selected } = this.props;
+		const { selected, list } = this.props;
 		return (
 			<div ref={this.dropDownRef} className="dropdown">
 				<button
@@ -57,8 +58,8 @@ class DropDown extends Component {
 				<ul
 					className={`dropdown-list reset bg-neutral-5 ${showList || "hidden"}`}
 				>
-					{this.props.list &&
-						this.props.list.map((listItem) => {
+					{list &&
+						list.map((listItem) => {
 							return (
 								<li
 									className={`list-item ${

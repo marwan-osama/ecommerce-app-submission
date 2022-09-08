@@ -51,7 +51,7 @@ class ProductDetails extends Component {
 	setProductDetails() {
 		getProductDetails(this.props.params.id).then((response) => {
 			const product = response.data.product;
-			const selectedPhoto = response.data.product.gallery[0];
+			const selectedPhoto = product.gallery[0];
 			const updatedState = {
 				product,
 				selectedPhoto,
@@ -76,6 +76,7 @@ class ProductDetails extends Component {
 
 	render() {
 		const { product, selectedPhoto } = this.state;
+		const { currency } = this.context;
 		const { id } = this.props.params;
 		return (
 			<>
@@ -128,11 +129,10 @@ class ProductDetails extends Component {
 						<div className="product-price">
 							<h4 className="reset">Price:</h4>
 							<p className="reset price fw-bold fs-6">
-								{this.context.currency?.symbol}
+								{currency?.symbol}
 								{
 									product?.prices.find(
-										(price) =>
-											price.currency.label === this.context.currency?.label
+										(price) => price.currency.label === currency?.label
 									)?.amount
 								}
 							</p>
