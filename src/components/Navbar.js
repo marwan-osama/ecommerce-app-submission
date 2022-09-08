@@ -24,6 +24,7 @@ class Navbar extends Component {
 	}
 
 	render() {
+		const { navigate } = this.props;
 		return (
 			<nav>
 				<div className="container">
@@ -41,11 +42,12 @@ class Navbar extends Component {
 							);
 						})}
 					</ul>
-					<img
-						src={process.env.PUBLIC_URL + "/images/svg-logo.svg"}
-						alt="logo"
-						className="logo"
-					/>
+					<button onClick={() => navigate(-1)} className="btn logo">
+						<img
+							src={process.env.PUBLIC_URL + "/images/svg-logo.svg"}
+							alt="logo"
+						/>
+					</button>
 					<div className="actions">
 						<DropDown
 							list={this.context.currencies}
