@@ -36,7 +36,14 @@ class FilterProvider extends Component {
 
 	verifyCategory(category = "all") {
 		const { categories } = this.state;
-		return categories?.includes(category) ? category : "all";
+		if (!categories) {
+			return { status: "loading", value: category };
+		}
+
+		return {
+			status: "loaded",
+			value: categories.includes(category) ? category : false,
+		};
 	}
 
 	componentDidMount() {

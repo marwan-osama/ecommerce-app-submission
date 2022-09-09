@@ -4,6 +4,7 @@ import Client from "../graphql/Client";
 import ProductCard from "./ProductCard";
 import { PropTypes } from "prop-types";
 import FilterContext from "../context/FilterContext";
+import NotFound from "./NotFound";
 
 const getCategoryProducts = async (category) => {
 	try {
@@ -28,9 +29,12 @@ class ProductListing extends Component {
 	static contextType = FilterContext;
 
 	componentDidMount() {
-		let { category = "all" } = this.props.params;
 		const { verifyCategory } = this.context;
-		category = verifyCategory(category);
+		let { category = "all" } = this.props.params;
+		category = verifyCategory(category).value;
+		if (!category) {
+			return;
+		}
 		getCategoryProducts(category).then((response) => {
 			const { products } = response.data.category;
 			this.setState({ products });
@@ -38,12 +42,15 @@ class ProductListing extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		let { category = "all" } = this.props.params;
 		const { verifyCategory } = this.context;
-
-		category = verifyCategory(category);
-
-		if (verifyCategory(prevProps.params.category) !== category) {
+		let { category = "all" } = this.props.params;
+		const prevCategory = verifyCategory(prevProps.params.category).value;
+		category = verifyCategory(category).value;
+		if (!category) {
+			return;
+		}
+		const { products } = this.state;
+		if (prevCategory !== category || !products?.length) {
 			getCategoryProducts(category).then((response) => {
 				const { products } = response.data.category;
 				this.setState({ products });
@@ -51,14 +58,16 @@ class ProductListing extends Component {
 		}
 	}
 
-	render() {
+	renderProducts() {
 		const { products } = this.state;
 		let { category } = this.props.params;
-		category = this.context.verifyCategory(category);
+		const { verifyCategory } = this.context;
 		return (
 			<div className="products">
 				<div className="container">
-					<h2 className="category-title fs-12">{category}</h2>
+					<h2 className="category-title fs-12">
+						{verifyCategory(category).value}
+					</h2>
 					<div className="products-wrapper">
 						{products?.map((product) => {
 							return <ProductCard product={product} key={product.id} />;
@@ -67,6 +76,17 @@ class ProductListing extends Component {
 				</div>
 			</div>
 		);
+	}
+
+	render() {
+		let { category } = this.props.params;
+		const { verifyCategory } = this.context;
+		if (verifyCategory(category).status === "loading") {
+			return;
+		} else if (verifyCategory(category).value) {
+			return this.renderProducts();
+		}
+		return <NotFound />;
 	}
 }
 

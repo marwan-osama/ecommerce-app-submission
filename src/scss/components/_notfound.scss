@@ -1,0 +1,15 @@
+.not-found {
+	@include flexCenter;
+	@include flexColumn(0px);
+	color: map-get($colors, "neutral-3");
+	font-size: clamp(2.5rem, 5vw, 5rem);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	> * {
+		margin: 0;
+	}
+}

@@ -934,6 +934,25 @@ nav .container .actions {
   transform: rotate(-90deg);
 }
 
+.not-found {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  color: #e5e5e5;
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.not-found > * {
+  margin: 0;
+}
+
 * {
   box-sizing: border-box;
 }

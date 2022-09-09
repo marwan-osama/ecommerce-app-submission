@@ -7,6 +7,7 @@ import Cart from "./Cart";
 import ProductDetails from "./ProductDetails";
 import FilterContext, { FilterProvider } from "../context/FilterContext";
 import WithRouter from "./HOCs/WithRouter";
+import NotFound from "./NotFound";
 
 class App extends Component {
 	render() {
@@ -34,6 +35,7 @@ class App extends Component {
 								path="/product/:id"
 								element={<WithRouter WrappedComponent={ProductDetails} />}
 							/>
+							<Route path="*" element={<NotFound />} />
 						</Routes>
 					</main>
 				</CartProvider>

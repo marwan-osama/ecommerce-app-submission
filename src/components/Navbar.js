@@ -11,10 +11,9 @@ class Navbar extends Component {
 
 	checkCategory(category) {
 		const { pathname } = this.props.location;
-		const { verifyCategory } = this.context;
 		if (
 			(pathname === "/" && category === "all") ||
-			verifyCategory(pathname.replace("/", "")) === category
+			pathname.replace("/", "") === category
 		) {
 			return "selected";
 		}
