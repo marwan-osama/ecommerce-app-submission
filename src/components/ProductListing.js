@@ -3,6 +3,7 @@ import { GET_CATEGORY_PRODUCTS } from "../graphql/Queries";
 import Client from "../graphql/Client";
 import ProductCard from "./ProductCard";
 import { PropTypes } from "prop-types";
+import FilterContext from "../context/FilterContext";
 
 const getCategoryProducts = async (category) => {
 	try {
@@ -24,28 +25,36 @@ class ProductListing extends Component {
 		};
 	}
 
+	static contextType = FilterContext;
+
 	componentDidMount() {
-		const { category } = this.props.filterContext;
-		if (category) {
-			getCategoryProducts(category).then((response) => {
-				const { products } = response.data.category;
-				this.setState({ products: products });
-			});
-		}
+		let { category = "all" } = this.props.params;
+		const { verifyCategory } = this.context;
+		category = verifyCategory(category);
+		getCategoryProducts(category).then((response) => {
+			const { products } = response.data.category;
+			this.setState({ products });
+		});
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		const { category } = this.props.filterContext;
-		if (prevProps.filterContext.category !== category) {
+		let { category = "all" } = this.props.params;
+		const { verifyCategory } = this.context;
+
+		category = verifyCategory(category);
+
+		if (verifyCategory(prevProps.params.category) !== category) {
 			getCategoryProducts(category).then((response) => {
-				this.setState({ products: response.data.category.products });
+				const { products } = response.data.category;
+				this.setState({ products });
 			});
 		}
 	}
 
 	render() {
 		const { products } = this.state;
-		const { category } = this.props.filterContext;
+		let { category } = this.props.params;
+		category = this.context.verifyCategory(category);
 		return (
 			<div className="products">
 				<div className="container">
@@ -62,7 +71,7 @@ class ProductListing extends Component {
 }
 
 ProductListing.propTypes = {
-	filterContext: PropTypes.object,
+	params: PropTypes.object,
 };
 
 export default ProductListing;

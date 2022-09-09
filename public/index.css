@@ -426,7 +426,11 @@ nav .container .navigation {
 nav .container .navigation .list-item {
   height: 100%;
 }
-nav .container .navigation .list-item .btn {
+nav .container .navigation .list-item .link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
   height: 100%;
   padding: 0 12px;
   border: none;

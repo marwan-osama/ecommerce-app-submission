@@ -8,7 +8,6 @@ class FilterProvider extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			category: null,
 			categories: null,
 			currency: JSON.parse(
 				localStorage.getItem("marwan-osama-ecommerce-app-currency")
@@ -16,7 +15,7 @@ class FilterProvider extends Component {
 			currencies: null,
 		};
 		this.switchCurrency = this.switchCurrency.bind(this);
-		this.switchCategory = this.switchCategory.bind(this);
+		this.verifyCategory = this.verifyCategory.bind(this);
 	}
 
 	async setDefaults() {
@@ -24,18 +23,20 @@ class FilterProvider extends Component {
 			const currenciesRes = await Client.query({ query: GET_CURRENCIES });
 			const categoriesRes = await Client.query({ query: GET_CATEGORIES_NAMES });
 			const currencies = currenciesRes.data.currencies;
-			const categories = categoriesRes.data.categories.map(
-				(category) => category.name
-			);
+			const categories = categoriesRes.data.categories.map((c) => c.name);
 			this.setState((state) => ({
 				currencies,
 				categories,
 				currency: state.currency || currencies[0],
-				category: categories[0],
 			}));
 		} catch (err) {
 			alert(err);
 		}
+	}
+
+	verifyCategory(category = "all") {
+		const { categories } = this.state;
+		return categories?.includes(category) ? category : "all";
 	}
 
 	componentDidMount() {
@@ -56,24 +57,18 @@ class FilterProvider extends Component {
 			return { currency: newCurrency };
 		});
 	}
-	switchCategory(newCategory) {
-		this.setState(() => {
-			return { category: newCategory };
-		});
-	}
 
 	render() {
-		const { currency, currencies, category, categories } = this.state;
-		const { switchCategory, switchCurrency } = this;
+		const { currency, currencies, categories } = this.state;
+		const { switchCurrency, verifyCategory } = this;
 		return (
 			<FilterContext.Provider
 				value={{
 					currency,
 					currencies,
 					switchCurrency,
-					category,
+					verifyCategory,
 					categories,
-					switchCategory,
 				}}
 			>
 				{this.props.children}

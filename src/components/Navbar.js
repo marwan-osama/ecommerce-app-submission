@@ -4,25 +4,21 @@ import DropDown from "./DropDown";
 import CartOverlay from "./CartOverlay";
 import { PropTypes } from "prop-types";
 import WithRouter from "./HOCs/WithRouter";
+import { Link } from "react-router-dom";
 
 class Navbar extends Component {
 	static contextType = FilterContext;
 
-	checkSelected(category) {
+	checkCategory(category) {
 		const { pathname } = this.props.location;
-		if (pathname !== "/") {
-			return "";
-		}
-		if (this.context.category === category) {
+		const { verifyCategory } = this.context;
+		if (
+			(pathname === "/" && category === "all") ||
+			verifyCategory(pathname.replace("/", "")) === category
+		) {
 			return "selected";
 		}
-	}
-	switchSelected(category) {
-		const { pathname } = this.props.location;
-		if (pathname !== "/") {
-			this.props.navigate("/");
-		}
-		this.context.switchCategory(category);
+		return "";
 	}
 
 	render() {
@@ -35,12 +31,12 @@ class Navbar extends Component {
 						{categories?.map((category) => {
 							return (
 								<li className="list-item" key={category}>
-									<button
-										className={`btn fs-3 ${this.checkSelected(category)}`}
-										onClick={() => this.switchSelected(category)}
+									<Link
+										className={`link fs-3 ${this.checkCategory(category)}`}
+										to={category !== "all" ? `/${category}` : ""}
 									>
 										{category.toUpperCase()}
-									</button>
+									</Link>
 								</li>
 							);
 						})}

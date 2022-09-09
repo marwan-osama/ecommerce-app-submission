@@ -20,17 +20,13 @@ class App extends Component {
 						<Routes>
 							<Route
 								exact
+								path="/:category"
+								element={<WithRouter WrappedComponent={ProductListing} />}
+							/>
+							<Route
+								exact
 								path="/"
-								element={
-									<FilterContext.Consumer>
-										{(filterContext) => (
-											<ProductListing
-												filterContext={filterContext}
-												categories={this.categories}
-											/>
-										)}
-									</FilterContext.Consumer>
-								}
+								element={<WithRouter WrappedComponent={ProductListing} />}
 							/>
 							<Route exact path="/cart" element={<Cart />} />
 							<Route
