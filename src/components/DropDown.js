@@ -24,9 +24,10 @@ class DropDown extends Component {
 
 	handleClickOutside(e) {
 		const { current } = this.dropDownRef;
-		if (!current.contains(e.target)) {
-			this.setState({ showList: false });
+		if (current.contains(e.target)) {
+			return;
 		}
+		this.setState({ showList: false });
 	}
 
 	componentDidMount() {

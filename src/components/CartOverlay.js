@@ -26,9 +26,10 @@ class CartOverlay extends Component {
 
 	handleClickOutside(e) {
 		const { current } = this.overlayWrapperRef;
-		if (!current.contains(e.target)) {
-			this.setState({ showCart: false });
+		if (current.contains(e.target)) {
+			return;
 		}
+		this.setState({ showCart: false });
 	}
 
 	inCart() {
@@ -37,9 +38,10 @@ class CartOverlay extends Component {
 
 	componentDidUpdate() {
 		const { showCart } = this.state;
-		if (this.inCart() && showCart) {
-			this.setState({ showCart: false });
+		if (!this.inCart() || !showCart) {
+			return;
 		}
+		this.setState({ showCart: false });
 	}
 
 	componentDidMount() {

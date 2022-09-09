@@ -28,7 +28,8 @@ class ProductListing extends Component {
 		const { category } = this.props.filterContext;
 		if (category) {
 			getCategoryProducts(category).then((response) => {
-				this.setState({ products: response.data.category.products });
+				const { products } = response.data.category;
+				this.setState({ products: products });
 			});
 		}
 	}
@@ -43,14 +44,14 @@ class ProductListing extends Component {
 	}
 
 	render() {
+		const { products } = this.state;
+		const { category } = this.props.filterContext;
 		return (
 			<div className="products">
 				<div className="container">
-					<h2 className="category-title fs-12">
-						{this.props.filterContext.category}
-					</h2>
+					<h2 className="category-title fs-12">{category}</h2>
 					<div className="products-wrapper">
-						{this.state.products?.map((product) => {
+						{products?.map((product) => {
 							return <ProductCard product={product} key={product.id} />;
 						})}
 					</div>

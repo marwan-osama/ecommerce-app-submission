@@ -9,7 +9,8 @@ class Navbar extends Component {
 	static contextType = FilterContext;
 
 	checkSelected(category) {
-		if (this.props.location.pathname !== "/") {
+		const { pathname } = this.props.location;
+		if (pathname !== "/") {
 			return "";
 		}
 		if (this.context.category === category) {
@@ -17,7 +18,8 @@ class Navbar extends Component {
 		}
 	}
 	switchSelected(category) {
-		if (this.props.location.pathname !== "/") {
+		const { pathname } = this.props.location;
+		if (pathname !== "/") {
 			this.props.navigate("/");
 		}
 		this.context.switchCategory(category);

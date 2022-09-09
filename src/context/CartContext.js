@@ -29,13 +29,10 @@ class CartProvider extends Component {
 		};
 	}
 
-	generateCartId(productId, selectedAttributes) {
-		if (selectedAttributes) {
-			return `${productId},${Object.keys(selectedAttributes).join(
-				"-"
-			)},${Object.values(selectedAttributes).join("-")}`;
-		}
-		return `${productId},default`;
+	generateCartId(productId, selectedAttributes = {}) {
+		return `${productId},${Object.keys(selectedAttributes).join(
+			"-"
+		)},${Object.values(selectedAttributes).join("-")}`;
 	}
 
 	defaultSelectedAttributes(attributes) {
@@ -162,10 +159,11 @@ class CartProvider extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if (JSON.stringify(prevState.cart) !== JSON.stringify(this.state.cart)) {
+		const { cart } = this.state;
+		if (JSON.stringify(prevState.cart) !== JSON.stringify(cart)) {
 			localStorage.setItem(
 				"marwan-osama-ecommerce-app-cart",
-				JSON.stringify(this.state.cart)
+				JSON.stringify(cart)
 			);
 		}
 	}
