@@ -50,16 +50,13 @@ class ProductDetails extends Component {
 
 	setProductDetails() {
 		getProductDetails(this.props.params.id).then((response) => {
-			const product = response.data.product;
+			const { product } = response.data;
 			const selectedPhoto = product.gallery[0];
 			const updatedState = {
 				product,
 				selectedPhoto,
 				selectedAttributes: {},
 			};
-			product.attributes.forEach((attribute) => {
-				updatedState.selectedAttributes[attribute.id] = attribute.items[0].id;
-			});
 			this.setState(updatedState);
 		});
 	}
@@ -75,7 +72,7 @@ class ProductDetails extends Component {
 	}
 
 	render() {
-		const { product, selectedPhoto } = this.state;
+		const { product, selectedPhoto, selectedAttributes } = this.state;
 		const { currency } = this.context;
 		const { id } = this.props.params;
 		return (
@@ -143,9 +140,7 @@ class ProductDetails extends Component {
 									<button
 										className="btn big-btn primary-btn fw-sbold"
 										onClick={() =>
-											cartContext.addToCart(id, {
-												...this.state.selectedAttributes,
-											})
+											cartContext.addToCart(id, selectedAttributes)
 										}
 									>
 										ADD TO CART

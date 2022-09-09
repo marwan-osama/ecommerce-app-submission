@@ -96,17 +96,12 @@ class CartProvider extends Component {
 		this.setState({ cart: cartCopy });
 	}
 
-	async addToCart(id, selectedAttributes) {
+	async addToCart(id, selectedAttributes = {}) {
 		const productIndex = this.state.cart.findIndex((p) => p.id === id);
 		if (productIndex === -1) {
 			getCartProduct(id).then((product) => {
-				if (selectedAttributes) {
-					product.selectedAttributes = selectedAttributes;
-				} else {
-					product.selectedAttributes = this.defaultSelectedAttributes(
-						product.attributes
-					);
-				}
+				const defaultAttrs = this.defaultSelectedAttributes(product.attributes);
+				product.selectedAttributes = { ...defaultAttrs, ...selectedAttributes };
 				product.uuid = generateUUID();
 				product.quantity = 1;
 				product.cartId = this.generateCartId(id, product.selectedAttributes);
@@ -114,43 +109,29 @@ class CartProvider extends Component {
 			});
 		} else {
 			const productCopy = { ...this.state.cart[productIndex] };
+			const defaultAttrs = this.defaultSelectedAttributes(
+				productCopy.attributes
+			);
 			productCopy.quantity = 1;
 			productCopy.uuid = generateUUID();
-			if (selectedAttributes) {
-				const cartId = this.generateCartId(productCopy.id, selectedAttributes);
-				const indexInCart = this.state.cart.findIndex(
-					(p) => p.cartId === cartId
-				);
-				if (indexInCart !== -1) {
-					const cartCopy = [...this.state.cart];
-					const product = { ...this.state.cart[indexInCart] };
-					product.quantity += 1;
-					cartCopy[indexInCart] = product;
-					this.setState({ cart: cartCopy });
-					return;
-				} else {
-					productCopy.cartId = cartId;
-					productCopy.selectedAttributes = selectedAttributes;
-				}
-			} else {
-				productCopy.selectedAttributes = this.defaultSelectedAttributes(
-					productCopy.attributes
-				);
-				productCopy.cartId = this.generateCartId(
-					id,
-					productCopy.selectedAttributes
-				);
-				const indexInCart = this.state.cart.findIndex(
-					(p) => p.cartId === productCopy.cartId
-				);
-				if (indexInCart !== -1) {
-					const cartCopy = [...this.state.cart];
-					const product = { ...this.state.cart[indexInCart] };
-					product.quantity += 1;
-					cartCopy[indexInCart] = product;
-					this.setState({ cart: cartCopy });
-					return;
-				}
+			productCopy.selectedAttributes = {
+				...defaultAttrs,
+				...selectedAttributes,
+			};
+			productCopy.cartId = this.generateCartId(
+				productCopy.id,
+				productCopy.selectedAttributes
+			);
+			const indexInCart = this.state.cart.findIndex(
+				(p) => p.cartId === productCopy.cartId
+			);
+			if (indexInCart !== -1) {
+				const cartCopy = [...this.state.cart];
+				const product = { ...this.state.cart[indexInCart] };
+				product.quantity += 1;
+				cartCopy[indexInCart] = product;
+				this.setState({ cart: cartCopy });
+				return;
 			}
 			this.setState((state) => ({
 				cart: [...state.cart, productCopy],
