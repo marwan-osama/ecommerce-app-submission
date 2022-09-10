@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 import { CartProvider } from "../context/CartContext";
 import Cart from "./Cart";
 import ProductDetails from "./ProductDetails";
-import FilterContext, { FilterProvider } from "../context/FilterContext";
+import { FilterProvider } from "../context/FilterContext";
 import WithRouter from "./HOCs/WithRouter";
 import NotFound from "./NotFound";
 
