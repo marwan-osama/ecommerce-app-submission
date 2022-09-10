@@ -18,6 +18,24 @@ class ShowMore extends Component {
 		});
 	}
 
+	renderShowMoreCover() {
+		return (
+			<>
+				<div className="hide-content"></div>
+				<button
+					className="btn fw-bold fs-4"
+					onClick={() => this.setState({ showMore: true })}
+				>
+					<div>Show more</div>
+					<img
+						src={process.env.PUBLIC_URL + "/images/svg-arrow-green.svg"}
+						alt="arrow"
+					/>
+				</button>
+			</>
+		);
+	}
+
 	render() {
 		const { innerHtml, maxHeight } = this.props;
 		const { validForShowMore, showMore } = this.state;
@@ -32,21 +50,7 @@ class ShowMore extends Component {
 						ref={this.showMoreContentRef}
 					></div>
 				</div>
-				{!showMore && validForShowMore && (
-					<>
-						<div className="hide-content"></div>
-						<button
-							className="btn fw-bold fs-4"
-							onClick={() => this.setState({ showMore: true })}
-						>
-							<div>Show more</div>
-							<img
-								src={process.env.PUBLIC_URL + "/images/svg-arrow-green.svg"}
-								alt="arrow"
-							/>
-						</button>
-					</>
-				)}
+				{!showMore && validForShowMore && this.renderShowMoreCover()}
 			</div>
 		);
 	}

@@ -31,16 +31,14 @@ class Cart extends Component {
 			<div className="cart container">
 				<h2 className="cart-title fs-12">CART</h2>
 				<div className="cart-items">
-					{this.context.cart.map((product) => {
-						return (
-							<CartItem
-								cartProduct={product}
-								key={product.cartId}
-								selectedPhoto={this.state.selectedPhotos[product.uuid]}
-								changeSelectedPhoto={this.changeSelectedPhoto.bind(this)}
-							/>
-						);
-					})}
+					{this.context.cart.map((product) => (
+						<CartItem
+							cartProduct={product}
+							key={product.cartId}
+							selectedPhoto={this.state.selectedPhotos[product.uuid]}
+							changeSelectedPhoto={this.changeSelectedPhoto.bind(this)}
+						/>
+					))}
 				</div>
 				<FilterContext.Consumer>
 					{(context) => (

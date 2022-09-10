@@ -38,6 +38,22 @@ class DropDown extends Component {
 		document.removeEventListener("mousedown", this.handleClickOutside);
 	}
 
+	renderListItem(item) {
+		const { selected } = this.props;
+
+		return (
+			<li
+				className={`list-item ${
+					selected.label === item.label && "bg-neutral-3"
+				}`}
+				key={item.label}
+				onClick={() => this.changeSelected(item)}
+			>
+				<button className="btn fs-4 fw-medium">{`${item.symbol} ${item.label}`}</button>
+			</li>
+		);
+	}
+
 	render() {
 		const { showList } = this.state;
 		const { selected, list } = this.props;
@@ -59,20 +75,7 @@ class DropDown extends Component {
 				<ul
 					className={`dropdown-list reset bg-neutral-5 ${showList || "hidden"}`}
 				>
-					{list &&
-						list.map((listItem) => {
-							return (
-								<li
-									className={`list-item ${
-										selected.label === listItem.label && "bg-neutral-3"
-									}`}
-									key={listItem.label}
-									onClick={() => this.changeSelected(listItem)}
-								>
-									<button className="btn fs-4 fw-medium">{`${listItem.symbol} ${listItem.label}`}</button>
-								</li>
-							);
-						})}
+					{list && list.map((item) => this.renderListItem(item))}
 				</ul>
 			</div>
 		);

@@ -37,6 +37,22 @@ class CartItem extends Component {
 		this.context.editCart(cartProductCopy);
 	}
 
+	renderCartProductImg(cartProduct) {
+		const { small } = this.props;
+		const classNames = {
+			imgWrapper: `cart-item-img-wrapper ${small ? "small" : ""}`,
+		};
+		return (
+			<div className={classNames.imgWrapper}>
+				<img
+					className="product-img"
+					src={cartProduct.gallery[0]}
+					alt={cartProduct.id}
+				/>
+			</div>
+		);
+	}
+
 	render() {
 		const { selectedPhoto, changeSelectedPhoto, cartProduct, small } =
 			this.props;
@@ -46,7 +62,6 @@ class CartItem extends Component {
 			brand: `reset ${small ? "fw-thin fs-4" : "fw-sbold fs-8"}`,
 			name: `reset ${small ? "fw-thin fs-4" : "fw-regular fs-8"}`,
 			price: `reset ${small ? "fw-medium" : "fw-bold fs-6"}`,
-			imgWrapper: `cart-item-img-wrapper ${small ? "small" : ""}`,
 			right: `cart-item-right ${small ? "small" : ""}`,
 			left: `cart-item-left ${small ? "small" : ""}`,
 		};
@@ -92,13 +107,7 @@ class CartItem extends Component {
 						small={small}
 					/>
 					{small || cartProduct.gallery.length === 1 ? (
-						<div className={classNames.imgWrapper}>
-							<img
-								className="product-img"
-								src={cartProduct.gallery[0]}
-								alt={cartProduct.id}
-							/>
-						</div>
+						this.renderCartProductImg(cartProduct)
 					) : (
 						<CartGallery
 							images={cartProduct.gallery}

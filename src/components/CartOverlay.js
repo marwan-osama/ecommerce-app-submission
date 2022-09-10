@@ -52,6 +52,44 @@ class CartOverlay extends Component {
 		document.removeEventListener("mousedown", this.handleClickOutside);
 	}
 
+	renderTotal() {
+		return (
+			<FilterContext.Consumer>
+				{(filterContext) => (
+					<div className="cart-total fw-bold">
+						<p className="reset">Total</p>
+						<p className="reset">
+							{filterContext.currency?.symbol}
+							{this.context.cartPriceSum(filterContext.currency)}
+						</p>
+					</div>
+				)}
+			</FilterContext.Consumer>
+		);
+	}
+	renderCartOverlayBtns() {
+		return (
+			<div className="cart-overlay-buttons">
+				<Link
+					className="reset btn neutral-btn fs-3"
+					to="/cart"
+					onClick={this.toggleShowCart}
+				>
+					VIEW BAG
+				</Link>
+				<button className="btn primary-btn fs-3">CHECK OUT</button>
+			</div>
+		);
+	}
+	renderCartOverlayFooter() {
+		return (
+			<>
+				{this.renderTotal()}
+				{this.renderCartOverlayBtns()}
+			</>
+		);
+	}
+
 	render() {
 		const { showCart } = this.state;
 		return (
@@ -79,40 +117,14 @@ class CartOverlay extends Component {
 						<h4 className="reset fw-regular fs-4">
 							<strong>My Bag</strong>, {this.context.cartQuantitySum()} items
 						</h4>
-						{this.context.cart.map((cartProduct) => {
-							return (
-								<CartItem
-									cartProduct={cartProduct}
-									key={cartProduct.cartId}
-									small
-								/>
-							);
-						})}
-						{!!this.context.cart.length && (
-							<>
-								<FilterContext.Consumer>
-									{(filterContext) => (
-										<div className="cart-total fw-bold">
-											<p className="reset">Total</p>
-											<p className="reset">
-												{filterContext.currency?.symbol}
-												{this.context.cartPriceSum(filterContext.currency)}
-											</p>
-										</div>
-									)}
-								</FilterContext.Consumer>
-								<div className="cart-overlay-buttons">
-									<Link
-										className="reset btn neutral-btn fs-3"
-										to="/cart"
-										onClick={this.toggleShowCart}
-									>
-										VIEW BAG
-									</Link>
-									<button className="btn primary-btn fs-3">CHECK OUT</button>
-								</div>
-							</>
-						)}
+						{this.context.cart.map((cartProduct) => (
+							<CartItem
+								cartProduct={cartProduct}
+								key={cartProduct.cartId}
+								small
+							/>
+						))}
+						{!!this.context.cart.length && this.renderCartOverlayFooter()}
 					</div>
 				</div>
 				{showCart && <div className="gray-cover"></div>}

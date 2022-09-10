@@ -49,6 +49,7 @@ CartGallery.propTypes = {
 	cartId: PropTypes.string,
 	changeSelectedPhoto: PropTypes.func,
 	selectedPhoto: PropTypes.number,
+	uuid: PropTypes.string,
 };
 
 export default CartGallery;

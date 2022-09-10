@@ -5,6 +5,12 @@ import { CartContext } from "../context/CartContext";
 import { PropTypes } from "prop-types";
 
 class ProductCard extends Component {
+	renderOutOfStockCover() {
+		return (
+			<p className="reset no-stock-text fs-8 clr-neutral-2">OUT OF STOCK</p>
+		);
+	}
+
 	render() {
 		const { product } = this.props;
 		return (
@@ -17,11 +23,7 @@ class ProductCard extends Component {
 								src={product.gallery[0]}
 								alt={product.name}
 							/>
-							{product.inStock || (
-								<p className="reset no-stock-text fs-8 clr-neutral-2">
-									OUT OF STOCK
-								</p>
-							)}
+							{product.inStock || this.renderOutOfStockCover()}
 						</div>
 					</Link>
 					<CartContext.Consumer>

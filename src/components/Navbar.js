@@ -20,6 +20,19 @@ class Navbar extends Component {
 		return "";
 	}
 
+	renderNavLink(category) {
+		return (
+			<li className="list-item" key={category}>
+				<Link
+					className={`link fs-3 ${this.checkCategory(category)}`}
+					to={category !== "all" ? `/${category}` : ""}
+				>
+					{category.toUpperCase()}
+				</Link>
+			</li>
+		);
+	}
+
 	render() {
 		const { navigate } = this.props;
 		const { currencies, switchCurrency, currency, categories } = this.context;
@@ -27,18 +40,7 @@ class Navbar extends Component {
 			<nav>
 				<div className="container">
 					<ul className="navigation reset">
-						{categories?.map((category) => {
-							return (
-								<li className="list-item" key={category}>
-									<Link
-										className={`link fs-3 ${this.checkCategory(category)}`}
-										to={category !== "all" ? `/${category}` : ""}
-									>
-										{category.toUpperCase()}
-									</Link>
-								</li>
-							);
-						})}
+						{categories?.map((category) => this.renderNavLink(category))}
 					</ul>
 					<button onClick={() => navigate(-1)} className="btn logo">
 						<img
